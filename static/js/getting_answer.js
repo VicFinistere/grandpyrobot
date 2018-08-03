@@ -38,6 +38,9 @@ $(document).keypress(function (e) {
         {
             //We append the input text
             $("#answer").html(input_text);
+
+            //We set the input text value to null
+            $("#input_text").val("");
         }
 
         //If the input if empty
