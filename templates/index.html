@@ -23,10 +23,11 @@
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
     <!-- Theme CSS -->
-    <link rel="stylesheet" href="static/css/cover.css">
+    <link rel="stylesheet" href="../static/css/cover.css">
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="static/css/custom.css">
+    <!--Todo : Delete or update this -->
+    <!-- Custom CSS ( JUST IF NEEDED-->
+    <!--<link rel="stylesheet" href="../static/css/custom.css">-->
 
     <!-- Fonts Awesome -->
     <script src="https://use.fontawesome.com/470b91f216.js"></script>
@@ -40,7 +41,8 @@
         <div class="inner">
           <h3 class="masthead-brand">Grandpy Robot</h3>
           <nav class="nav nav-masthead justify-content-center">
-            <a class="nav-link active" href="#">Home</a>
+              <!--I have removed href -->
+            <a class="nav-link active">Web App</a>
             <!--<a class="nav-link" href="#">Features</a>-->
             <!--<a class="nav-link" href="#">Contact</a>-->
           </nav>
@@ -49,10 +51,11 @@
 
       <main role="main" class="inner cover">
         <h1 class="cover-heading">Let the papy rocks !</h1>
-        <p class="lead">Grandpy Robot uses Cover template to get nice home page.</p>
-        <p class="lead">
-          <a href="#" class="btn btn-lg btn-secondary">Just click!</a>
-        </p>
+          <form>
+            <input type="text" id="userRequest">
+          </form>
+        <button class="btn btn-lg btn-secondary" id="answer_button">Try it !</button>
+            <div id="answer"></div>
       </main>
 
       <footer class="mastfoot mt-auto">
@@ -67,7 +70,8 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-    <script src="static/js/popper.min.js"></script>
-    <script src=".static/js/bootstrap.min.js"></script>
+    <script src="../static/js/getting_answer.js"></script>
+    <script src="../static/js/popper.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
   </body>
 </html>
