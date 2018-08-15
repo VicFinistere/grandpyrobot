@@ -28,3 +28,16 @@ p.user_blue_msg
     width: auto;
     height:auto;
 }
+
+/*#map*/
+/*{*/
+    /*!*height:100%;*!*/
+    /*width:900px;*/
+    /*height:580px;*/
+/*}*/
+
+#map {
+    width: 100%;
+    height: 400px;
+    background-color: grey;
+}
