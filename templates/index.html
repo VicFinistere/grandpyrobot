@@ -24,6 +24,7 @@
 
     <!-- Theme CSS -->
     <link rel="stylesheet" href="../static/css/cover.css">
+    <link rel="stylesheet" href="../static/css/style.css">
 
     <!--Todo : Delete or update this -->
     <!-- Custom CSS ( JUST IF NEEDED-->
@@ -53,19 +54,28 @@
 
       <main role="main" class="inner cover">
         <h1 class="cover-heading">Let the papy rocks !</h1>
-          <!--form-->
-              <input type="text" id="input_text" class="form-control" placeholder="Ask Grandpy something...">
-          <!--/form-->
-          <br>
-          <button class="btn btn-lg btn-secondary" id="answer_button">Push Enter !</button>
+          <p>Grandpy is a sophistical artificial intelligence</p>
+          <p>
+              <small>...But it seems that his knowledge is coming from Google Maps and Wikipedia</small>
+          </p>
+          <div id="text" class="row">
+              <div id="text_area" class="col"></div>
+          </div>
+          <input type="text" autofocus id="input_text" class="form-control text-center" placeholder="Your text goes here..."><br>
+          <button class="btn btn-lg btn-secondary" id="answer_button">Ask !</button>
 
 
-            <div id="answer"></div>
+            <div id="text_error"></div>
       </main>
 
       <footer class="mastfoot mt-auto">
         <div class="inner">
           <p>Grandpy robot tells you funny stories about places</p>
+            <p>
+                <small>Zoé Belleton -
+                <a href="https://github.com/Zoeinfp/grandpyrobot" alt="github" style="text-decoration: none">Github</a>
+                </small>
+            </p>
         </div>
       </footer>
     </div>
@@ -74,6 +84,8 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="../static/js/sending_text.js"></script>
+    <script src="../static/js/scroll_to_bottom.js"></script>
     <script src="../static/js/getting_answer.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
   </body>
