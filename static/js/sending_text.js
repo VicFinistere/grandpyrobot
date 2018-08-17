@@ -6,33 +6,40 @@ $(function () { $(document).keypress(function (e) { if (e.which === 13){ sending
 
 function sending_text()
 {
+    setInterval(function(){ answer();  }, 1000);
+
+    //Getting answer area
+    var answer_area = $("#answer");
+
     //Getting the input value
-    var input_text = $("#input_text").val();
+    var input_text = $("#input_text");
+
+    var input_value = input_text.val();
 
     //Getting the content in page
-    var content = $("#answer").html();
+    var content = answer_area.html();
 
     //If the input is filled
-    if(input_text != "")
+    if(input_value !== "")
     {
         //We append the input text
         $('<p>', { class: 'user_blue_msg', text: input_text}).appendTo('#text_area');
 
         //We set the input text value to null
-        $("#input_text").val("");
+        input_text.val("");
     }
 
     //If the input if empty
     else
     {
         //It has to be something in input
-        var text = "Write something please !..."
+        var text = "Write something please !...";
 
         //If it's not already said
-        if(content != text)
+        if(content !== text)
         {
             //Say it!
-            $("#answer").html(text);
+            answer_area.html(text);
         }
     }
 }
