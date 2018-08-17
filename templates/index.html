@@ -9,6 +9,8 @@
     <meta name="description" content="Grandpy robot tells you funny stories about places">
     <meta name="author" content="Zoé Belleton">
     <title>Grandpy Robot</title>
+    <link rel="shortcut icon" type="image/png"
+          href="https://images.duckduckgo.com/iu/?u=https%3A%2F%2Fimage.flaticon.com%2Ficons%2Fpng%2F512%2F270%2F270137.png&f=1"/>
 
     <meta property="og:title" content="Grandpy Robot" />
     <meta property="og:type" content="website" />
@@ -25,10 +27,6 @@
     <!-- Theme CSS -->
     <link rel="stylesheet" href="../static/css/cover.css">
     <link rel="stylesheet" href="../static/css/style.css">
-
-    <!--Todo : Delete or update this -->
-    <!-- Custom CSS ( JUST IF NEEDED-->
-    <!--<link rel="stylesheet" href="../static/css/custom.css">-->
 
     <!-- Fonts Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
@@ -53,26 +51,25 @@
       </header>
 
       <main role="main" class="inner cover">
-        <h1 class="cover-heading">Let the papy rocks !</h1>
-          <p>Grandpy is a sophistical artificial intelligence</p>
+        <br><br><h1 class="cover-heading">Le papy qui déchire du bottin!</h1>
+          <p>Grandpy a assurément trop la côte...</p>
           <p>
-              <small>...But it seems that his knowledge is coming from Google Maps and Wikipedia</small>
+              <small>...Et pourtant ce ne serait lié à priori qu'à sa connection vers Google Maps et Wikipédia.</small>
           </p>
           <div id="text" class="row">
               <div id="text_area" class="col"></div>
           </div>
-          <input type="text" autofocus id="input_text" class="form-control text-center" placeholder="Your text goes here..."><br>
-          <button class="btn btn-lg btn-secondary" id="answer_button">Ask !</button>
+          <input type="text" autofocus id="input_text" class="form-control text-center" placeholder="Est-ce que tu connais l'adresse d'OpenClassrooms ?"><br>
+          <button class="btn btn-lg btn-secondary" id="answer_button"><i class="fas fa-glasses"></i></button><br><br>
 
 
             <div id="text_error"></div>
-            <h3>Google Maps API</h3>
             <div id="map"></div>
       </main>
 
-      <footer class="mastfoot mt-auto">
-        <div class="inner">
-          <p>Grandpy robot tells you funny stories about places</p>
+      <footer>
+        <div class="mastfoot inner">
+          <p>Grandpy robot te parle des lieux que tu cherches.</p>
             <p>
                 <small>Zoé Belleton -
                 <a href="https://github.com/Zoeinfp/grandpyrobot" alt="github" style="text-decoration: none">Github</a>
@@ -85,10 +82,12 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>    <script src="../static/js/introduction.js"></script>
     <script src="../static/js/sending_text.js"></script>
     <script src="../static/js/scroll_to_bottom.js"></script>
     <script src="../static/js/getting_answer.js"></script>
+    <script src="../static/js/wikipedia.js"></script>
+    <script src="../static/js/google_maps.js"></script>
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC65XSHecjvaAwjDaTvreKTA8YSIoNXfpk&callback=initMap">
     </script>
