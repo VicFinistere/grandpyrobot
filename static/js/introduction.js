@@ -19,32 +19,42 @@ function introduction()
 //
 function wiki()
 {
-    var wikiAPI = "https://fr.wikipedia.org/w/api.php?origin=*&action=query&titles=";
-    var url_params = "&prop=revisions&rvprop=content&format=json";
-    $.get(wikiAPI + "apple" + url_params, function (json)
-    {
-        var wiki_result = JSON.stringify(json);
-        // var wiki_result_id;
-        $.each(JSON.parse(wiki_result), function (key, value)
-        {
-            if (key === "query")
-            {
-                var wiki_query = JSON.stringify(value);
-                $.each(JSON.parse(wiki_query), function (key, value)
-                {
-                    if (key === "pages")
-                    {
-                        var wiki_page = JSON.stringify(value);
-                        $.each(JSON.parse(wiki_page), function (key){
-                            var wiki_id = JSON.stringify(key);
-                            alert(wiki_id);
-                        });
-                    }
-                });
-            }
+    var playListURL = 'http://en.wikipedia.org/w/api.php?format=json&action=query&titles=India&origin=*&prop=revisions&rvprop=content&callback=?';
+
+    $.getJSON(playListURL ,function(data) {
+        $.each(data.pages, function(i, item) {
+            alert(i);
+
         });
     });
 }
+// function wiki()
+// {
+//     var wikiAPI = "https://en.wikipedia.org/w/api.php?action=query&format=json&gsrlimit=15&generator=search&origin=*&gsrsearch=";
+//     $.get(wikiAPI + "apple", function (json)
+//     {
+//         var wiki_result = JSON.stringify(json);
+//         // var wiki_result_id;
+//         $.each(JSON.parse(wiki_result), function (key, value)
+//         {
+//             if (key === "query")
+//             {
+//                 var wiki_query = JSON.stringify(value);
+//                 $.each(JSON.parse(wiki_query), function (key, value)
+//                 {
+//                     if (key === "pages")
+//                     {
+//                         var wiki_page = JSON.stringify(value);
+//                         $.each(JSON.parse(wiki_page), function (key){
+//                             var wiki_id = JSON.stringify(key);
+//                             alert(wiki_id);
+//                         });
+//                     }
+//                 });
+//             }
+//         });
+//     });
+// }
         //
         // var total = $('ul li').length;
         // $('ul li').each(function(index) {
