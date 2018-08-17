@@ -19,7 +19,7 @@ function introduction()
 //
 function wiki()
 {
-    var playListURL = 'http://en.wikipedia.org/w/api.php?format=json&action=query&titles=India&origin=*&prop=revisions&rvprop=content&callback=?';
+    var playListURL = 'https://en.wikipedia.org/w/api.php?format=json&action=query&titles=India&origin=*&prop=revisions&rvprop=content&callback=?';
 
     $.getJSON(playListURL ,function(data) {
         $.each(data.pages, function(i, item) {
