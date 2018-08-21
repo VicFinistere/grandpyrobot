@@ -20,17 +20,13 @@ function initMap(lat, Lng)
                 }
                 else
                 {
-                    lat = 46,2276;
-                    Lng = 2,2137;
+                    init_by_default();
                 }
             });
         }
         else
         {
-            lat = 46,2276;
-            Lng = 2,2137;
-            mapCenter = new google.maps.LatLng(lat,Lng);
-            create_map_objects(mapCenter);
+            init_by_default();
         }
     }
     else
@@ -38,6 +34,14 @@ function initMap(lat, Lng)
         mapCenter = new google.maps.LatLng(lat,Lng);
         create_map_objects(mapCenter);
     }
+}
+
+function init_by_default()
+{
+    lat = 46,2276;
+    Lng = 2,2137;
+    mapCenter = new google.maps.LatLng(lat,Lng);
+    create_map_objects(mapCenter);
 }
 
 function activatePlacesSearch()
