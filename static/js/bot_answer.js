@@ -1,71 +1,7 @@
-var wiki_result_status;
-
-function wiki_search(requested_area)
+function bot_answering(user_input, user_text, user_checked_text)
 {
-    $.get(
-        "https://fr.wikipedia.org/w/api.php?action=query&titles="+requested_area+"&prop=revisions&rvprop=content&format=json)",
-        function (data) {
-            alert("petit poucé");
-            alert('page content: ' + data);
-            var wiki_json_result = data;
-            wiki_result_status = true;
-            return [wiki_json_result, wiki_result_status];
-        }
-    );
-}
-    //
-//     $.get("https://fr.wikipedia.org/w/api.php?action=query&titles="+requested_area+"&prop=revisions&rvprop=content&format=json)",
-//         function (wiki_json_result)
-//         {
-//             alert("cherche wikipedia cherche");
-//             if (wiki_json_result === undefined ) wiki_answer(unregistered_area_story);
-//             else if (wiki_json_result["query"] === undefined) wiki_answer(unregistered_area_story);
-//             else if (wiki_json_result["query"]["pages"]["5653202"] === undefined) wiki_answer(unregistered_area_story);
-//             else
-//             {
-//                 var story = wiki_json_result["query"]["pages"]["5653202"]["revisions"][0]["*"];
-//                 alert(story);
-//                 wiki_result_status = true;
-//                 return [wiki_json_result, wiki_result_status];
-//             }
-//
-//         });
-// }
-
-function answer()
-{
-    var user_input = $('#text_area').children('p.user_blue_msg').last();
-    var user_text = user_input.html();
-    if(user_text !== null)
-    {
-        try
-        {
-            var user_checked_text = user_text.toLowerCase();
-        }
-        catch (error)
-        {
-            console.error(error);
-        }
-
-    }
-
-
-    var wiki_json_result, wiki_result_status = wiki_search(user_checked_text);
-
     switch (true)
     {
-
-        case(wiki_result_status):
-            if (user_input.css('color') !== 'rgb(230, 230, 230)')
-            {
-                if(wiki_json_result)
-                {
-                    $('<p>', {class: 'robot_white_msg', text: wiki_json_result}).appendTo('#text_area');
-                    user_input.css('color', 'rgb(230, 230, 230)');
-                }
-
-            }
-            break;
         case(user_checked_text.indexOf("bonjour") !== -1):
             if (user_input.css('color') !== 'rgb(230, 230, 230)')
             {
@@ -228,14 +164,6 @@ function answer()
                 user_input.css('color', 'rgb(230, 230, 230)');
             }
             break;
-        case(user_checked_text.indexOf("t'") !== -1):
-            if (user_input.css('color') !== 'rgb(230, 230, 230)')
-            {
-                $('<p>', {class: 'robot_white_msg', text: "Je suis grandpy !"}).appendTo('#text_area');
-                $('<p>', {class: 'robot_white_msg', text: "Je peux te trouver un lieu..."}).appendTo('#text_area');
-                user_input.css('color', 'rgb(230, 230, 230)');
-            }
-            break;
         case(user_checked_text.indexOf("désol") !== -1):
             if (user_input.css('color') !== 'rgb(230, 230, 230)')
             {
@@ -258,6 +186,13 @@ function answer()
             }
             break;
         case(user_checked_text.indexOf("connais tu") !== -1):
+            if (user_input.css('color') !== 'rgb(230, 230, 230)')
+            {
+                $('<p>', {class: 'robot_white_msg', text: "Non je ne connais pas encore..."}).appendTo('#text_area');
+                user_input.css('color', 'rgb(230, 230, 230)');
+            }
+            break;
+        case(user_checked_text.indexOf("tu connais") !== -1):
             if (user_input.css('color') !== 'rgb(230, 230, 230)')
             {
                 $('<p>', {class: 'robot_white_msg', text: "Non je ne connais pas encore..."}).appendTo('#text_area');
@@ -378,6 +313,24 @@ function answer()
                 user_input.css('color', 'rgb(230, 230, 230)');
             }
             break;
+        case(user_checked_text.indexOf("fuite") !== -1):
+            if (user_input.css('color') !== 'rgb(230, 230, 230)')
+            {
+                $('<p>', {class: 'robot_white_msg', text: "Oups..."}).appendTo('#text_area');
+                $('<p>', {class: 'robot_white_msg', text:
+                        "Je peux te trouver un lieu..."}).appendTo('#text_area');
+                user_input.css('color', 'rgb(230, 230, 230)');
+            }
+            break;
+        case(user_checked_text.indexOf("huile") !== -1):
+            if (user_input.css('color') !== 'rgb(230, 230, 230)')
+            {
+                $('<p>', {class: 'robot_white_msg', text: "Oui...Attention ça glisse ! Ahahah"}).appendTo('#text_area');
+                $('<p>', {class: 'robot_white_msg', text:
+                        "Je peux te trouver un lieu..."}).appendTo('#text_area');
+                user_input.css('color', 'rgb(230, 230, 230)');
+            }
+            break;
         case(user_checked_text.indexOf("ça va") !== -1):
             if (user_input.css('color') !== 'rgb(230, 230, 230)')
             {
@@ -397,6 +350,15 @@ function answer()
             if (user_input.css('color') !== 'rgb(230, 230, 230)')
             {
                 $('<p>', {class: 'robot_white_msg', text: "Je suis grandpy !"}).appendTo('#text_area');
+                $('<p>', {class: 'robot_white_msg', text:
+                        "Je peux te trouver un lieu..."}).appendTo('#text_area');
+                user_input.css('color', 'rgb(230, 230, 230)');
+            }
+            break;
+        case(user_checked_text.indexOf("t'") !== -1):
+            if (user_input.css('color') !== 'rgb(230, 230, 230)')
+            {
+                $('<p>', {class: 'robot_white_msg', text: "Je suis grandpy !"}).appendTo('#text_area');
                 $('<p>', {class: 'robot_white_msg', text: "Je peux te trouver un lieu..."}).appendTo('#text_area');
                 user_input.css('color', 'rgb(230, 230, 230)');
             }
@@ -405,10 +367,10 @@ function answer()
             if (user_input.css('color') !== 'rgb(230, 230, 230)')
             {
                 $('<p>', {class: 'robot_white_msg far fa-grin-beam-sweat'}).appendTo('#text_area');
-                $('<p>', {class: 'robot_white_msg', text: "...?"}).appendTo('#text_area');
                 user_input.css('color', 'rgb(230, 230, 230)');
             }
             break;
     }
+    scroll();
 }
 
