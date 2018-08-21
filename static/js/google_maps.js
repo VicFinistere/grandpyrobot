@@ -17,7 +17,7 @@ function initMap(lat, Lng)
                 create_map_objects(mapCenter);
 
             });
-            if(mapCenter === undefined)
+            if(lat === undefined || Lng === undefined)
             {
                 mapCenter = new google.maps.LatLng(46.2276, 2.2137);
                 create_map_objects(mapCenter);
