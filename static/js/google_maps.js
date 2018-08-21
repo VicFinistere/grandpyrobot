@@ -5,7 +5,7 @@ function initMap(lat, Lng)
     activatePlacesSearch();
     var mapCenter;
 
-    if(lat == undefined || Lng == undefined)
+    if(lat === undefined || Lng === undefined)
     {
         if(navigator.geolocation)
         {
@@ -38,9 +38,9 @@ function initMap(lat, Lng)
 
 function init_by_default()
 {
-    lat = 46,2276;
-    Lng = 2,2137;
-    mapCenter = new google.maps.LatLng(lat,Lng);
+    var lat = 46.2276;
+    var Lng = 2.2137;
+    var mapCenter = new google.maps.LatLng(lat,Lng);
     create_map_objects(mapCenter);
 }
 
