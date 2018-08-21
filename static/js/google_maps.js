@@ -7,23 +7,24 @@ function initMap(lat, Lng)
 
     if(lat === undefined || Lng === undefined)
     {
+        try:
         if(navigator.geolocation)
         {
             navigator.geolocation.getCurrentPosition(function (position)
             {
                 lat = Number(position.coords.latitude.toString());
                 Lng = Number(position.coords.longitude.toString());
-                if(lat !== undefined || Lng !== undefined)
+                try
                 {
                     mapCenter = new google.maps.LatLng(lat,Lng);
                     create_map_objects(mapCenter);
                 }
-                else
+                catch(error)
                 {
-                    var lat = 46.2276;
+                    ar lat = 46.2276;
                     var Lng = 2.2137;
                     var mapCenter = new google.maps.LatLng(lat,Lng);
-                    create_map_objects(mapCenter);
+                    create_map_objects(mapCenter);v
                 }
             });
         }
