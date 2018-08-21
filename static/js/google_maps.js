@@ -14,7 +14,7 @@ function initMap(lat, Lng)
             {
                 lat = Number(position.coords.latitude.toString());
                 Lng = Number(position.coords.longitude.toString());
-                mapCenter = new google.maps.LatLng(lat,Lng);
+                var mapCenter = new google.maps.LatLng(lat,Lng);
                 create_map_objects(mapCenter);
 
             });
