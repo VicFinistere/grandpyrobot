@@ -1,99 +1,73 @@
-// Initialize and add the map
-function initMap() {
-    // The location of Uluru
-    var uluru = {lat: -25.344, lng: 131.036};
-    // The map, centered at Uluru
-    var map = new google.maps.Map(
-        document.getElementById('map'), {zoom: 4, center: uluru});
-    // The marker, positioned at Uluru
-    var marker = new google.maps.Marker({position: uluru, map: map});
+var map;
+
+function initMap(lat, Lng)
+{
+    activatePlacesSearch();
+    var mapCenter;
+    if(navigator.geolocation)
+    {
+        navigator.geolocation.getCurrentPosition(function (position)
+        {
+            if(lat == undefined || Lng == undefined)
+            {
+                lat = Number(position.coords.latitude.toString());
+                Lng = Number(position.coords.longitude.toString());
+            }
+            mapCenter = new google.maps.LatLng(lat,Lng);
+            create_map_objects(mapCenter);
+        });
+    }
+    else
+    {
+        mapCenter = new google.maps.LatLng(-33.8617374,151.2021291);
+        create_map_objects(mapCenter);
+    }
+
 }
 
-// var map;
-//
-// function initialize() {
-//   // Create a map centered in Pyrmont, Sydney (Australia).
-//   map = new google.maps.Map(document.getElementById('map'), {
-//     center: {lat: -33.8666, lng: 151.1958},
-//     zoom: 15
-//   });
-//
-//   // Search for Google's office in Australia.
-//   var request = {
-//     location: map.getCenter(),
-//     radius: '500',
-//     query: 'Google Sydney'
-//   };
-//
-//   var service = new google.maps.places.PlacesService(map);
-//   service.textSearch(request, callback);
-// }
-//
-// // Checks that the PlacesServiceStatus is OK, and adds a marker
-// // using the place ID and location from the PlacesService.
-// function callback(results, status) {
-//   if (status == google.maps.places.PlacesServiceStatus.OK) {
-//     var marker = new google.maps.Marker({
-//       map: map,
-//       place: {
-//         placeId: results[0].place_id,
-//         location: results[0].geometry.location
-//       }
-//     });
-//   }
-// }
-//
-// google.maps.event.addDomListener(window, 'load', initialize);
+function activatePlacesSearch()
+{
+    var input = document.getElementById('input_text');
+    var auto_complete = new google.maps.places.Autocomplete(input);
+}
 
-//function initMap() {
-//        var map = new google.maps.Map(document.getElementById('map'), {
-//          zoom: 8,
-//          center: {lat: -34.397, lng: 150.644}
-//        });
-//        var geocoder = new google.maps.Geocoder();
-//
-//        document.getElementById('submit').addEventListener('click', function() {
-//          geocodeAddress(geocoder, map);
-//        });
-//      }
-//
-//      function geocodeAddress(geocoder, resultsMap) {
-//        var address = document.getElementById('address').value;
-//        geocoder.geocode({'address': address}, function(results, status) {
-//          if (status === 'OK') {
-//            resultsMap.setCenter(results[0].geometry.location);
-//            var marker = new google.maps.Marker({
-//              map: resultsMap,
-//              position: results[0].geometry.location
-//            });
-//          } else {
-//            alert('Geocode was not successful for the following reason: ' + status);
-//          }
-//        });
-//      }
+function create_map_objects(mapCenter)
+{
+    map = new google.maps.Map(document.getElementById('map'), {center: mapCenter, zoom: 15});
+    marker = new google.maps.Marker({position: mapCenter,map: map});
+    return map;
+}
 
-//function loadMap() {
-//   var mapOptions = {
-//      center:new google.maps.LatLng(17.240498, 82.287598),
-//      zoom:9,
-//      mapTypeId:google.maps.MapTypeId.ROADMAP
-//   };
-//}
+function find_place(requested_area)
+{
+    $.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + requested_area + "&key=AIzaSyDL3Y5p7GsKor0nJ5mVZscqsd9hejr145s",
+        function (responseMaps)
+        {
+            var data = responseMaps;
+            var exact_address = data["results"][0]["formatted_address"];
+            $('<p>', {class: 'robot_white_msg', text: exact_address}).appendTo('#text_area');
+            var lat = data["results"][0]["geometry"]["location"]["lat"];
+            var lng = data["results"][0]["geometry"]["location"]["lng"];
+            initMap(lat, lng);
+        });
+}
 
-//function initMap()
-//{
-//    var myLatLng = {lat: -25.363, lng: 131.044};
-//
-//    // Create a map object and specify the DOM element for display.
-//    var map = new google.maps.Map(document.getElementById('map'),
-//    {
-//      center: myLatLng,//      zoom: 4
-//    });
-//
-//    // Create a marker and set its position.
-//    var marker = new google.maps.Marker({
-//      map: map,
-//      position: myLatLng,
-//      title: 'Hello World!'
-//    });
-//}
+function maps_api(input_text)
+{
+    $.getJSON($SCRIPT_ROOT + '/google_api', {keywords:input_text},
+        function(data)
+       {
+           if (data !== 'failed')
+           {
+               var lat = Number(data[0]);
+               var lng = Number(data[1]);
+               var address = data[2];
+               if (address !== '')
+               {
+                   $('<p>', {class: 'robot_white_msg', text: "L'adresse que tu cherches est "+address+" !"}).appendTo('#text_area');
+                   scroll();
+               }
+               initMap(lat, lng);
+           }
+       });
+}
