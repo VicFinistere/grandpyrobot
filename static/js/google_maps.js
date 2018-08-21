@@ -7,7 +7,6 @@ function initMap(lat, Lng)
 
     if(lat === undefined || Lng === undefined)
     {
-        try:
         if(navigator.geolocation)
         {
             navigator.geolocation.getCurrentPosition(function (position)
