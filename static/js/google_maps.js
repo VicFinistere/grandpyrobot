@@ -20,13 +20,19 @@ function initMap(lat, Lng)
                 }
                 else
                 {
-                    init_by_default();
+                    var lat = 46.2276;
+                    var Lng = 2.2137;
+                    var mapCenter = new google.maps.LatLng(lat,Lng);
+                    create_map_objects(mapCenter);
                 }
             });
         }
         else
         {
-            init_by_default();
+            var lat = 46.2276;
+            var Lng = 2.2137;
+            var mapCenter = new google.maps.LatLng(lat,Lng);
+            create_map_objects(mapCenter);
         }
     }
     else
@@ -34,14 +40,6 @@ function initMap(lat, Lng)
         mapCenter = new google.maps.LatLng(lat,Lng);
         create_map_objects(mapCenter);
     }
-}
-
-function init_by_default()
-{
-    var lat = 46.2276;
-    var Lng = 2.2137;
-    var mapCenter = new google.maps.LatLng(lat,Lng);
-    create_map_objects(mapCenter);
 }
 
 function activatePlacesSearch()
