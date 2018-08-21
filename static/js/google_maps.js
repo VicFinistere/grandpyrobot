@@ -13,19 +13,19 @@ function initMap(lat, Lng)
             {
                 lat = Number(position.coords.latitude.toString());
                 Lng = Number(position.coords.longitude.toString());
-                var mapCenter = new google.maps.LatLng(lat,Lng);
+                mapCenter = new google.maps.LatLng(lat,Lng);
                 create_map_objects(mapCenter);
 
             });
-            if(mapCenter == undefined)
+            if(mapCenter === undefined)
             {
-                var mapCenter = new google.maps.LatLng(46.2276, 2.2137);
+                mapCenter = new google.maps.LatLng(46.2276, 2.2137);
                 create_map_objects(mapCenter);
             }
         }
         else
         {
-            var mapCenter = new google.maps.LatLng(46.2276, 2.2137);
+            mapCenter = new google.maps.LatLng(46.2276, 2.2137);
             create_map_objects(mapCenter);
         }
     }
@@ -39,29 +39,31 @@ function initMap(lat, Lng)
 function activatePlacesSearch()
 {
     var input = document.getElementById('input_text');
-    var auto_complete = new google.maps.places.Autocomplete(input);
+    var auto_complete;
+    auto_complete = new google.maps.places.Autocomplete(input);
 }
 
 function create_map_objects(mapCenter)
 {
     map = new google.maps.Map(document.getElementById('map'), {center: mapCenter, zoom: 15});
+    var marker;
     marker = new google.maps.Marker({position: mapCenter,map: map});
     return map;
 }
 
-function find_place(requested_area)
-{
-    $.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + requested_area + "&key=AIzaSyDL3Y5p7GsKor0nJ5mVZscqsd9hejr145s",
-        function (responseMaps)
-        {
-            var data = responseMaps;
-            var exact_address = data["results"][0]["formatted_address"];
-            $('<p>', {class: 'robot_white_msg', text: exact_address}).appendTo('#text_area');
-            var lat = data["results"][0]["geometry"]["location"]["lat"];
-            var lng = data["results"][0]["geometry"]["location"]["lng"];
-            initMap(lat, lng);
-        });
-}
+// function find_place(requested_area)
+// {
+//     $.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + requested_area + "&key=AIzaSyDL3Y5p7GsKor0nJ5mVZscqsd9hejr145s",
+//         function (responseMaps)
+//         {
+//             var data = responseMaps;
+//             var exact_address = data["results"][0]["formatted_address"];
+//             $('<p>', {class: 'robot_white_msg', text: exact_address}).appendTo('#text_area');
+//             var lat = data["results"][0]["geometry"]["location"]["lat"];
+//             var lng = data["results"][0]["geometry"]["location"]["lng"];
+//             initMap(lat, lng);
+//         });
+// }
 
 function maps_api(input_text)
 {
