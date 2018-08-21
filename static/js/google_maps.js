@@ -21,11 +21,7 @@ function initMap(lat, Lng)
         }
         else
         {
-            var lat = 46.2276;
-            var lat = Number(lat.toString());
-            var Lng = 2.2137;
-            var Lng = Number(Lng.toString());
-            var mapCenter = new google.maps.LatLng(lat,Lng);
+            var mapCenter = new google.maps.LatLng(46.2276, 2.2137);
             create_map_objects(mapCenter);
         }
     }
