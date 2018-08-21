@@ -4,25 +4,33 @@ function initMap(lat, Lng)
 {
     activatePlacesSearch();
     var mapCenter;
-    if(navigator.geolocation)
+
+    if(lat == undefined || Lng == undefined)
     {
-        navigator.geolocation.getCurrentPosition(function (position)
+        if(navigator.geolocation)
         {
-            if(lat == undefined || Lng == undefined)
+            navigator.geolocation.getCurrentPosition(function (position)
             {
                 lat = Number(position.coords.latitude.toString());
                 Lng = Number(position.coords.longitude.toString());
-            }
-            mapCenter = new google.maps.LatLng(lat,Lng);
-            create_map_objects(mapCenter);
-        });
+                if(lat !== undefined || Lng !== undefined)
+                {
+                    mapCenter = new google.maps.LatLng(lat,Lng);
+                    create_map_objects(mapCenter);
+                }
+                else
+                {
+                    lat = 46,2276;
+                    Lng = 2,2137;
+                }
+            });
+        }
     }
     else
     {
-        mapCenter = new google.maps.LatLng(-33.8617374,151.2021291);
+        mapCenter = new google.maps.LatLng(lat,Lng);
         create_map_objects(mapCenter);
     }
-
 }
 
 function activatePlacesSearch()
