@@ -25,6 +25,11 @@ function initMap(lat, Lng)
                 }
             });
         }
+        else
+        {
+            lat = 46,2276;
+            Lng = 2,2137;
+        }
     }
     else
     {
