@@ -29,6 +29,8 @@ function initMap(lat, Lng)
         {
             lat = 46,2276;
             Lng = 2,2137;
+            mapCenter = new google.maps.LatLng(lat,Lng);
+            create_map_objects(mapCenter);
         }
     }
     else
