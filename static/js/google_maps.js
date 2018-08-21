@@ -7,27 +7,29 @@ function initMap(lat, Lng)
 
     if(lat === undefined || Lng === undefined)
     {
-        if(navigator.geolocation)
-        {
-            navigator.geolocation.getCurrentPosition(function (position)
-            {
-                lat = Number(position.coords.latitude.toString());
-                Lng = Number(position.coords.longitude.toString());
-                mapCenter = new google.maps.LatLng(lat,Lng);
-                create_map_objects(mapCenter);
-
-            });
-            if(lat === undefined || Lng === undefined)
-            {
-                mapCenter = new google.maps.LatLng(46.2276, 2.2137);
-                create_map_objects(mapCenter);
-            }
-        }
-        else
-        {
-            mapCenter = new google.maps.LatLng(46.2276, 2.2137);
+        mapCenter = new google.maps.LatLng(46.2276, 2.2137);
             create_map_objects(mapCenter);
-        }
+//        if(navigator.geolocation)
+//        {
+//            navigator.geolocation.getCurrentPosition(function (position)
+//            {
+//                lat = Number(position.coords.latitude.toString());
+//                Lng = Number(position.coords.longitude.toString());
+//                mapCenter = new google.maps.LatLng(lat,Lng);
+//                create_map_objects(mapCenter);
+//
+//            });
+//            if(lat === undefined || Lng === undefined)
+//            {
+//                mapCenter = new google.maps.LatLng(46.2276, 2.2137);
+//                create_map_objects(mapCenter);
+//            }
+//        }
+//        else
+//        {
+//            mapCenter = new google.maps.LatLng(46.2276, 2.2137);
+//            create_map_objects(mapCenter);
+//        }
     }
     else
     {
