@@ -14,24 +14,17 @@ function initMap(lat, Lng)
             {
                 lat = Number(position.coords.latitude.toString());
                 Lng = Number(position.coords.longitude.toString());
-                try
-                {
-                    mapCenter = new google.maps.LatLng(lat,Lng);
-                    create_map_objects(mapCenter);
-                }
-                catch(error)
-                {
-                    ar lat = 46.2276;
-                    var Lng = 2.2137;
-                    var mapCenter = new google.maps.LatLng(lat,Lng);
-                    create_map_objects(mapCenter);v
-                }
+                mapCenter = new google.maps.LatLng(lat,Lng);
+                create_map_objects(mapCenter);
+
             });
         }
         else
         {
             var lat = 46.2276;
+            var lat = Number(lat.toString());
             var Lng = 2.2137;
+            var Lng = Number(Lng.toString());
             var mapCenter = new google.maps.LatLng(lat,Lng);
             create_map_objects(mapCenter);
         }
