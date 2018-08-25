@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="../static/css/style.css">
 
     <!-- Fonts Awesome -->
+    <link rel="stylesheet" href="../static/css/font_awesome_animations.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
           integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
     <!--<script src="https://use.fontawesome.com/470b91f216.js"></script>-->
@@ -56,12 +57,10 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script type="text/javascript">var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};</script>
-    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script><script src="../static/js/introduction.js"></script>
-    <script src="../static/js/sending_text.js"></script>
-    <script src="../static/js/scroll_to_bottom.js"></script>
-    <script src="../static/js/answer.js"></script>
-    <script src="../static/js/encyclopedia.js"></script>
+    <script type="text/javascript">$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};</script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="../static/js/messaging.js"></script>
+    <script src="../static/js/wikipedia.js"></script>
     <script src="../static/js/google_maps.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDL3Y5p7GsKor0nJ5mVZscqsd9hejr145s&libraries=places&callback=initMap"></script>
     <script src="../static/js/bot_answer.js"></script>
