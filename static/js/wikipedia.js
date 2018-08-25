@@ -9,7 +9,7 @@ function wiki_api(user_input)
             //Debug
             console.debug("Using wiki personnal API getting: "+user_input+" (wikipedia.js)");
 
-            if(wiki_answer !== 'wiki failed')
+            if(wiki_answer !== 'failed')
             {
                 //Debug
                 console.debug("wiki succeed (wikipedia.js)");
