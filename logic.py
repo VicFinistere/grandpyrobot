@@ -60,7 +60,7 @@ def cleaning_request(user_request):
 
 
 '''''''''''''''''''''
-GOOGLE MAPS 
+GOOGLE  MAPS
 Python Functions
 '''''''''''''''''''''
 
@@ -72,14 +72,12 @@ def google_maps_request(keywords):
     try:
         lat = data["results"][0]["geometry"]["location"]["lat"]
         lng = data["results"][0]["geometry"]["location"]["lng"]
-        try:
-            address = data["results"][0]["formatted_address"]
-            name = data["results"][0]["name"]
-            return name, lat, lng, address
-        except KeyError:
-            return keywords, lat, lng, keywords,
+        address = data["results"][0]["formatted_address"]
+        name = data["results"][0]["name"]
+        return name, lat, lng, address
     except IndexError:
-        pass
+        logging.error(f"google maps request failed with keyword(s) {keywords} (logic.py)")
+        return 'failed'
 
 
 def query_autocomplete_place(input_request):

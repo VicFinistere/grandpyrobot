@@ -15,12 +15,12 @@ def index():
 def google_api():
     input_request = request.args.get('input_text', '')
     cleaned_request = logic.cleaning_request(input_request)
-    try:
-        name, lat, lng, address = logic.google_maps_request(cleaned_request)
+    google_response = logic.google_maps_request(cleaned_request)
+    if google_response != 'failed':
+        name, lat, lng, address = google_response[0], google_response[1], google_response[2], google_response[3]
         logging.info("Google maps worked")
         return jsonify(name, lat, lng, address)
-
-    except TypeError:
+    else:
         logging.exception("Google maps failed")
         return jsonify('failed')
 
