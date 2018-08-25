@@ -15,12 +15,16 @@ def index():
 def google_api():
     input_request = request.args.get('input_text', '')
     cleaned_request = logic.cleaning_request(input_request)
-    google_response = logic.google_maps_request(cleaned_request)
-    if google_response != 'failed':
-        name, lat, lng, address = google_response[0], google_response[1], google_response[2], google_response[3]
-        logging.info("Google maps worked")
-        return jsonify(name, lat, lng, address)
-    else:
+    try:
+        maps_response = logic.google_maps_request(cleaned_request)
+        if maps_response is not None and maps_response is not 'Failed':
+            name, lat, lng, address = maps_response[0], maps_response[1], maps_response[2], maps_response[3]
+            return jsonify(name, lat, lng, address)
+        else:
+            logging.exception("Google maps failed")
+            return jsonify('failed')
+
+    except IndexError:
         logging.exception("Google maps failed")
         return jsonify('failed')
 
@@ -30,17 +34,17 @@ def wiki_api():
     user_input = request.args.get('user_input', '')
     cleaned_request = logic.cleaning_request(user_input)
     data = logic.wiki_request(cleaned_request)
-    if data:
+    if data is not None:
         logging.info("Wiki wordked with cleaned request")
         return jsonify(data)
     else:
         data = logic.wiki_loop_through_keywords(cleaned_request)
-        if data:
+        if data is not None:
             logging.info("Wiki wordked with cleaned request")
             return jsonify(data)
         else:
             logging.exception("Wiki failed")
-            return jsonify('wiki failed')
+            return jsonify('failed')
 
 
 @app.route('/query_place')
