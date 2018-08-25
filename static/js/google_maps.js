@@ -92,7 +92,7 @@ function place_auto_complete(data)
 {
     //Debug
     console.debug("place_auto_complete "+data+" (google_maps.js)");
-    if (data !== 'failed')
+    if (data !== undefined)
     {
         //Debug
         console.debug("place_auto_complete : Query place worked ! (google_maps.js) ");
@@ -120,7 +120,7 @@ function remake_maps_call(data)
             //Debug
             console.debug("Using google maps personnal API (google_maps.js)");
 
-            if (data !== 'failed')
+            if (data !== 'failed' )
             {
                 //Debug
                 console.debug("google maps succeed (google_maps.js)");
