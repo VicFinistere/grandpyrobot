@@ -1,5 +1,9 @@
-function bot_answering(user_input, user_text, user_checked_text)
+var user_input = $('#text_area').children('p.user_blue_msg').last();
+
+function bot_answering(user_checked_text)
 {
+    //Log
+    console.log("bot_answering (bot_answer.js)");
     switch (true)
     {
         case(user_checked_text.indexOf("bonjour") !== -1):
@@ -129,13 +133,6 @@ function bot_answering(user_input, user_text, user_checked_text)
                 user_input.css('color', 'rgb(230, 230, 230)');
             }
             break;
-        case(user_checked_text.indexOf("comment") !== -1):
-            if (user_input.css('color') !== 'rgb(230, 230, 230)')
-            {
-                $('<p>', {class: 'robot_white_msg', text: "Il faut écrire un lieu dans la case!"}).appendTo('#text_area');
-                user_input.css('color', 'rgb(230, 230, 230)');
-            }
-            break;
         case(user_checked_text.indexOf("nul") !== -1):
             if (user_input.css('color') !== 'rgb(230, 230, 230)')
             {
@@ -181,21 +178,21 @@ function bot_answering(user_input, user_text, user_checked_text)
         case(user_checked_text.indexOf("connais-tu") !== -1):
             if (user_input.css('color') !== 'rgb(230, 230, 230)')
             {
-                $('<p>', {class: 'robot_white_msg', text: "Non je ne connais pas encore..."}).appendTo('#text_area');
+                $('<p>', {class: 'robot_white_msg', text: "Ah je me souviens pas vraiment ce que c'est mais..."}).appendTo('#text_area');
                 user_input.css('color', 'rgb(230, 230, 230)');
             }
             break;
         case(user_checked_text.indexOf("connais tu") !== -1):
             if (user_input.css('color') !== 'rgb(230, 230, 230)')
             {
-                $('<p>', {class: 'robot_white_msg', text: "Non je ne connais pas encore..."}).appendTo('#text_area');
+                $('<p>', {class: 'robot_white_msg', text: "Ah je me souviens pas vraiment ce que c'est mais..."}).appendTo('#text_area');
                 user_input.css('color', 'rgb(230, 230, 230)');
             }
             break;
         case(user_checked_text.indexOf("tu connais") !== -1):
             if (user_input.css('color') !== 'rgb(230, 230, 230)')
             {
-                $('<p>', {class: 'robot_white_msg', text: "Non je ne connais pas encore..."}).appendTo('#text_area');
+                $('<p>', {class: 'robot_white_msg', text: "Ah je me souviens pas vraiment ce que c'est mais..."}).appendTo('#text_area');
                 user_input.css('color', 'rgb(230, 230, 230)');
             }
             break;
@@ -220,13 +217,6 @@ function bot_answering(user_input, user_text, user_checked_text)
                 user_input.css('color', 'rgb(230, 230, 230)');
             }
             break;
-        case(user_checked_text.indexOf("moi") !== -1):
-            if (user_input.css('color') !== 'rgb(230, 230, 230)')
-            {
-                $('<p>', {class: 'robot_white_msg', text: "Ok !"}).appendTo('#text_area');
-                user_input.css('color', 'rgb(230, 230, 230)');
-            }
-            break;
         case(user_checked_text.indexOf("dire") !== -1):
             if (user_input.css('color') !== 'rgb(230, 230, 230)')
             {
@@ -244,14 +234,7 @@ function bot_answering(user_input, user_text, user_checked_text)
         case(user_checked_text.indexOf("ou est") !== -1):
             if (user_input.css('color') !== 'rgb(230, 230, 230)')
             {
-                $('<p>', {class: 'robot_white_msg', text: "On ne m'as pas encore renseigné là dessus..."}).appendTo('#text_area');
-                user_input.css('color', 'rgb(230, 230, 230)');
-            }
-            break;
-        case(user_checked_text.indexOf("où est") !== -1):
-            if (user_input.css('color') !== 'rgb(230, 230, 230)')
-            {
-                $('<p>', {class: 'robot_white_msg', text: "On ne m'as pas encore renseigné là dessus..."}).appendTo('#text_area');
+                $('<p>', {class: 'robot_white_msg', text: "On ne m'a pas encore renseigné là dessus..."}).appendTo('#text_area');
                 user_input.css('color', 'rgb(230, 230, 230)');
             }
             break;
@@ -268,6 +251,12 @@ function bot_answering(user_input, user_text, user_checked_text)
                 $('<p>', {class: 'robot_white_msg', text: "Mon bouton si situe juste au dessous."}).appendTo('#text_area');
                 $('<p>', {class: 'robot_white_msg', text: "Si tu as une touche entrée il est inutile."}).appendTo('#text_area');
                 user_input.css('color', 'rgb(230, 230, 230)');
+            }
+            break;
+        case(user_checked_text.indexOf("comment") !== -1):
+            if (user_input.css('color') !== 'rgb(230, 230, 230)')
+            {
+                $('<p>', {class: 'robot_white_msg', text: "Il faut écrire un lieu dans la case!"}).appendTo('#text_area');                $('<p>', {class: 'robot_white_msg', text: "Si tu as une touche entrée il est inutile."}).appendTo('#text_area');
             }
             break;
         case(user_checked_text.indexOf("quoi") !== -1):
