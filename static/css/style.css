@@ -12,7 +12,7 @@ p.robot_white_msg
     background: lightgray;
     color:black;
     padding:20px;
-    margin-right: 50%;
+    margin-right: 20%;
     border-radius: 25px;
     width: auto;
     height:auto;
@@ -23,18 +23,11 @@ p.user_blue_msg
     background: deepskyblue;
     color:white;
     padding:20px;
-    margin-left: 50%;
+    margin-left: 20%;
     border-radius: 25px;
     width: auto;
     height:auto;
 }
-
-/*#map*/
-/*{*/
-    /*!*height:100%;*!*/
-    /*width:900px;*/
-    /*height:580px;*/
-/*}*/
 
 #map {
     width: 100%;
