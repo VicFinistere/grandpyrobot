@@ -16,12 +16,12 @@ function wiki_api(user_input)
                 setTimeout(function ()
                 {
                     scroll();
-                    $('<p>', {class: 'robot_white_msg wiki_answer', text: "J'ai une anecdote !"}).appendTo('#text_area');
+                    $('<p>', {class: 'robot_white_msg wiki_answer tmp', text: "J'ai une anecdote !"}).appendTo('#text_area');
                     scroll();
                 }, 1000);
                 setTimeout(function ()
                 {
-                    $('#text_area').children('p.wiki_answer').last().hide();
+                    $('#text_area').children('p.tmp').last().hide();
                 },2000)
                 setTimeout(function ()
                 {
