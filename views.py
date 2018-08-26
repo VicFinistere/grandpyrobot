@@ -21,11 +21,11 @@ def google_api():
             name, lat, lng, address = maps_response[0], maps_response[1], maps_response[2], maps_response[3]
             return jsonify(name, lat, lng, address)
         else:
-            logging.exception("Google maps failed")
+            logging.exception("Google maps failed (views.py)")
             return jsonify('failed')
 
     except IndexError:
-        logging.exception("Google maps failed")
+        logging.exception("Google maps failed (views.py)")
         return jsonify('failed')
 
 
@@ -60,6 +60,6 @@ def query_place():
             logging.exception("query place failed (views.py)")
             return jsonify('failed')
 
-    except TypeError as e:
+    except TypeError:
         logging.exception("query place failed (views.py)")
         return jsonify('failed')
