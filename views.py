@@ -35,15 +35,15 @@ def wiki_api():
     cleaned_request = logic.cleaning_request(user_input)
     data = logic.wiki_request(cleaned_request)
     if data:
-        logging.info("Wiki wordked with cleaned request")
+        logging.info("Wiki wordked with cleaned request (views.py)")
         return jsonify(data)
     else:
         data = logic.wiki_loop_through_keywords(cleaned_request)
         if data:
-            logging.info("Wiki wordked with cleagitned request")
+            logging.info("Wiki wordked with cleagitned request (views.py)")
             return jsonify(data)
         else:
-            logging.exception("Wiki failed")
+            logging.exception("Wiki failed (views.py)")
             return jsonify('failed')
 
 

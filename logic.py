@@ -1,16 +1,23 @@
-"""File containing function utilised by the app"""
-import requests
+"""
+WebApp Python Side - Logic
+"""
 import json
-import config
 import logging
+import requests
+import config
 
-'''''''''''''''''
+'''
 GENERIC USAGE
 Python functions
-'''''''''''''''''
+'''
 
 
 def request_api(url):
+    """
+    Request api
+    :param url: API url
+    :return: JSON Data
+    """
     logging.info(f"request_api with {url} (logic.py)")
     data = requests.get(url)
     return data.json()
@@ -54,15 +61,21 @@ def cleaning_request(user_request):
     return " ".join(keywords_list)
 
 
-'''''''''''''''''''''
+'''
 GOOGLE  MAPS
 Python Functions
-'''''''''''''''''''''
+'''
 
 
-def google_maps_request(keywords):
-    logging.info(f"google maps request {keywords} (logic.py)")
-    url = f"https://maps.googleapis.com/maps/api/place/textsearch/json?input={keywords}&key={config.KEY}"
+def google_maps_request(user_request):
+    """
+    Google maps request
+    :param user_request: user request
+    :return: maps_response : [name, lat, lng, address ]
+    """
+    logging.info(f"google maps request {user_request} (logic.py)")
+    url = f"https://maps.googleapis.com/maps/api/place/textsearch/json?input={user_request}&key={config.KEY}"
+
     data = request_api(url)
     if data is not None:
         try:
@@ -77,7 +90,7 @@ def google_maps_request(keywords):
             logging.error("Google maps couldn't assign..")
             return None
     else:
-        logging.error(f"google maps request failed with keyword(s) {keywords} (logic.py)")
+        logging.error(f"google maps request failed with keyword(s) {user_request} (logic.py)")
         return None
 
 
@@ -87,6 +100,7 @@ def assign_maps_data(data):
     :param data: Maps data in json
     :return: name, lat, lng, address
     """
+
     try:
         lat = data["results"][0]["geometry"]["location"]["lat"]
         lng = data["results"][0]["geometry"]["location"]["lng"]
@@ -94,30 +108,38 @@ def assign_maps_data(data):
         name = data["results"][0]["name"]
         result = [name, lat, lng, address]
         return result
+
     except IndexError:
         logging.error("Index error assign maps data (logic.py)")
         return None
 
 
 def query_autocomplete_place(input_request):
+    """
+    Query for a place by auto completion
+    :param input_request: User request
+    :return: The first place returned by the query place api
+    """
     logging.info(f"query autocomplete place : {input_request} (logic.py)")
     autocomplete_url = "https://maps.googleapis.com/maps/api/place/queryautocomplete/json"
     url = f"{autocomplete_url}?key={config.KEY}&language=fr?&input={input_request}"
     data = request_api(url)
-    if data is not None:
+
+    try:
         place = data["predictions"][0]["description"]
         logging.info("query autocomplete place worked !(logic.py)")
         return place
-    else:
+
+    except IndexError:
         logging.exception("query autocomplete place failed (logic.py)")
         return None
 
 
-'''''''''''''''''''''
+'''
 WIKI ENCYCLOPEDIA
 Python Functions
 
-'''''''''''''''''''''
+'''
 
 
 def wiki_loop_through_keywords(request):
@@ -128,15 +150,17 @@ def wiki_loop_through_keywords(request):
     """
     logging.info(f"wiki loop through {request} (logic.py)")
     request = request.split(' ')
+
     for i, _ in enumerate(request):
-        logging.info(f"{request[i]}")
+        print(request[i])
         wiki_answer = wiki_request(request[i])
-        logging.info(f"{wiki_answer}")
-        if wiki_answer is not None:
+        # Using the first result
+        if wiki_answer:
             logging.info(f"wiki find this answer : {wiki_answer} (logic.py)")
             return wiki_answer
-        else:
-            return None
+        i += 1
+    print('faiiiiiiiiled')
+    return None
 
 
 def wiki_request(requested_area):
@@ -150,11 +174,13 @@ def wiki_request(requested_area):
     wiki_url = "https://fr.wikipedia.org/w/api.php"
     title_url = f'{wiki_url}?action=opensearch&search={requested_area}'
     wiki_title_answer = request_api(title_url)
+
     if wiki_title_answer and wiki_title_answer[1]:
         logging.info("wiki_title_answer worked !")
         wiki_title = wiki_title_answer[1][0]
         wiki_extract = getting_wiki_extract(wiki_title)
         return wiki_extract
+
     else:
         logging.info("wiki request failed on start...")
         return None
