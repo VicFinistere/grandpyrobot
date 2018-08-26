@@ -47,7 +47,7 @@ def cleaning_request(user_request):
     array_of_words = user_request.split()
 
     # Using stopwords file
-    with open('static/json/stopwords.json', 'r') as file:
+    with open(config.ROOT+'/static/json/stopwords.json', 'r') as file:
         stopwords = json.load(file)
 
         # Parsing each word in array
