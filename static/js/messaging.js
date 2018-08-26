@@ -92,13 +92,13 @@ function sending_text()
 
 function asking_robot()
 {
-    $('<p>', {class: 'robot_white_msg wait fas fa-spinner faa-spin animated'}).appendTo('#text_area');
+    $('<p>', {class: 'wait robot_white_msg fas fa-spinner faa-spin animated'}).appendTo('#text_area');
     scroll();
     setTimeout(function ()
     {
-        $('#text_area').children('p.wait').last().hide();
+        $('p.wait').hide();
         answer();
-        $('#text_area').children('p.wait').last().remove();
+        $('p:hidden').remove();
     },500);
 
 }
