@@ -16,18 +16,17 @@ function wiki_api(user_input)
                 setTimeout(function ()
                 {
                     scroll();
-                    $('<p>', {class: 'robot_white_msg wiki_answer tmp', text: "J'ai une anecdote !"}).appendTo('#text_area');
+                    $('<p>', {class: 'tmp robot_white_msg wiki_answer', text: "J'ai une anecdote !"}).appendTo('#text_area');
                     scroll();
                 }, 1000);
+
+                setTimeout(function () {$('p.tmp').hide();},2000);
+
                 setTimeout(function ()
                 {
-                    $('#text_area').children('p.tmp').last().hide();
-                },2000)
-                setTimeout(function ()
-                {
-                    $('#text_area').children('p.tmp').last().remove();
-                    $('<p>', {class: 'robot_white_msg', text: wiki_answer}).appendTo('#text_area');
                     scroll();
+                    $('p:hidden').remove();
+                    $('<p>', {class: 'robot_white_msg', text: wiki_answer}).appendTo('#text_area');
                 },1800);
             }
             else
