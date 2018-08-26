@@ -27,12 +27,17 @@ function wiki_api(user_input)
                     scroll();
                     $('p:hidden').remove();
                     $('<p>', {class: 'robot_white_msg', text: wiki_answer}).appendTo('#text_area');
+                    setTimeout(function ()
+                    {
+                        $('p.maps').hide();
+                        scroll();
+                    },3000);
                 },1800);
             }
             else
             {
                 //Warn
-                console.warn("wiki failed (wikipedia.js)");
+                console.debug("wiki failed (wikipedia.js)");
                 bot_answering(user_input);
             }
 

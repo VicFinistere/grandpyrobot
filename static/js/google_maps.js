@@ -165,7 +165,7 @@ function sending_address_text(name, address)
 {
 
     clear_text();
-    $('<p>', {class: 'robot_white_msg', text:"Je connais ce lieu ! Je te montre sur la carte !"}).appendTo('#text_area');
+    $('<p>', {class: 'maps robot_white_msg', text:"Je connais ce lieu ! Je te montre sur la carte !"}).appendTo('#text_area');
     $('<p>', {text: name + " : " + address}).appendTo('#text_place_area');
 
     //Debug
@@ -180,6 +180,6 @@ function sending_maps_failed_text()
     $('<p>', {text: maps_failed_text}).appendTo('#text_place_area');
 
     //Warn
-    console.warn("sending_maps_failed_text (google_maps.js)");
+    console.debug("sending_maps_failed_text (google_maps.js)");
 }
 

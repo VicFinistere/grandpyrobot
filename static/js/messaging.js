@@ -73,7 +73,7 @@ function sending_text()
     else
     {
         //Warn
-        console.warn("No message in input text ! (messaging.js)");
+        console.debug("No message in input text ! (messaging.js)");
 
         //It has to be something in input
         var text = "Posez une question à Papy Robot!...";
