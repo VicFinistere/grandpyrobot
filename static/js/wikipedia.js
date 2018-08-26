@@ -25,7 +25,7 @@ function wiki_api(user_input)
                 },2000)
                 setTimeout(function ()
                 {
-                    $('#text_area').children('p.wait').last().remove();
+                    $('#text_area').children('p.tmp').last().remove();
                     $('<p>', {class: 'robot_white_msg', text: wiki_answer}).appendTo('#text_area');
                     scroll();
                 },1800);

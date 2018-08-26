@@ -40,7 +40,7 @@ def wiki_api():
     else:
         data = logic.wiki_loop_through_keywords(cleaned_request)
         if data:
-            logging.info("Wiki wordked with cleaned request")
+            logging.info("Wiki wordked with cleagitned request")
             return jsonify(data)
         else:
             logging.exception("Wiki failed")
