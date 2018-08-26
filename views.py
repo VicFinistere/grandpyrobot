@@ -34,12 +34,12 @@ def wiki_api():
     user_input = request.args.get('user_input', '')
     cleaned_request = logic.cleaning_request(user_input)
     data = logic.wiki_request(cleaned_request)
-    if data is not None:
+    if data:
         logging.info("Wiki wordked with cleaned request")
         return jsonify(data)
     else:
         data = logic.wiki_loop_through_keywords(cleaned_request)
-        if data is not None:
+        if data:
             logging.info("Wiki wordked with cleaned request")
             return jsonify(data)
         else:
