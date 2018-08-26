@@ -176,7 +176,7 @@ function sending_maps_failed_text()
 {
     clear_text();
 
-    var maps_failed_text = "( Papy a oublié ce lieu... Essayez autre chose... )";
+    var maps_failed_text = "( Essayez un autre lieu... )";
     $('<p>', {text: maps_failed_text}).appendTo('#text_place_area');
 
     //Warn

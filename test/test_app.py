@@ -24,7 +24,7 @@ class TestFlaskApp(unittest.TestCase):
 
 
 class TestLogic(unittest.TestCase):
-    """test all functions in the 'utils.py' file"""
+    """test all functions in the 'logic.py' file"""
 
     def test_cleaning_request(self):
         """Cleaning request"""
