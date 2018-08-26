@@ -52,6 +52,8 @@ function sending_text()
     //Debug
     console.debug("sending_text (messaging.js)");
 
+    clear_text();
+
     //Getting the input value
     var input_text = $("#input_text").val();
 
@@ -61,8 +63,6 @@ function sending_text()
     //If the input is filled
     if(input_text !== "")
     {
-        clear_text();
-
         //We append the input text
         $('<p>', { class: 'user_blue_msg', text: input_text}).appendTo('#text_area');
         scroll();
