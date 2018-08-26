@@ -2,10 +2,14 @@
 Handling views of the web application
 """
 from flask import Flask, render_template, request, jsonify
+from flask_assets import Environment, Bundle
 import logic
 import logging
 
 app = Flask(__name__)
+assets = Environment(app)
+json = Bundle('static/json/stopwords.json', output='gen/packed.json')
+assets.register('json', json)
 
 
 @app.route('/', methods=['GET', 'POST'])
