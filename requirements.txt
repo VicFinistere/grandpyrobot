@@ -1,7 +1,6 @@
 requests
 click==6.7
 Flask==1.0.2
-flask-assets
 gunicorn==19.9.0
 itsdangerous==0.24
 Jinja2==2.10
