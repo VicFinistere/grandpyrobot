@@ -1,3 +1,6 @@
+"""
+Handling views of the web application
+"""
 from flask import Flask, render_template, request, jsonify
 import logic
 import logging
@@ -8,11 +11,18 @@ app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
+    """
+    Index :return: web page template
+    """
     return render_template('index.html')
 
 
 @app.route('/google_api')
-def google_api():
+def calling_google_api():
+    """
+    Google personal api
+    :return: json result
+    """
     input_request = request.args.get('input_text', '')
     cleaned_request = logic.cleaning_request(input_request)
     try:
@@ -30,7 +40,11 @@ def google_api():
 
 
 @app.route('/wiki_api')
-def wiki_api():
+def calling_wiki_api():
+    """
+    Wiki personal api
+    :return: json result
+    """
     user_input = request.args.get('user_input', '')
     cleaned_request = logic.cleaning_request(user_input)
     data = logic.wiki_request(cleaned_request)
@@ -49,6 +63,10 @@ def wiki_api():
 
 @app.route('/query_place')
 def query_place():
+    """
+    Query auto complete place
+    :return: Place prediction
+    """
     input_request = request.args.get('keywords', default=None)
     cleaned_request = logic.cleaning_request(input_request)
     try:

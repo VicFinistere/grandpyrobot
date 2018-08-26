@@ -124,16 +124,13 @@ def query_autocomplete_place(input_request):
     autocomplete_url = "https://maps.googleapis.com/maps/api/place/queryautocomplete/json"
     url = f"{autocomplete_url}?key={config.KEY}&language=fr?&input={input_request}"
     data = request_api(url)
-
-    try:
+    if data["status"] is 'OK':
         place = data["predictions"][0]["description"]
         logging.info("query autocomplete place worked !(logic.py)")
         return place
-
-    except IndexError:
+    else:
         logging.exception("query autocomplete place failed (logic.py)")
         return None
-
 
 '''
 WIKI ENCYCLOPEDIA
