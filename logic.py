@@ -77,7 +77,6 @@ def google_maps_request(user_request):
     url = f"https://maps.googleapis.com/maps/api/place/textsearch/json?input={user_request}&key={config.KEY}"
 
     data = request_api(url)
-    print(data)
     if data is not None:
         try:
             maps_response = assign_maps_data(data)
@@ -125,7 +124,8 @@ def query_autocomplete_place(input_request):
     autocomplete_url = "https://maps.googleapis.com/maps/api/place/queryautocomplete/json"
     url = f"{autocomplete_url}?key={config.KEY}&language=fr?&input={input_request}"
     data = request_api(url)
-    if data["status"] is 'OK':
+
+    if data["status"] == 'OK':
         place = data["predictions"][0]["description"]
         logging.info("query autocomplete place worked !(logic.py)")
         return place
@@ -151,7 +151,6 @@ def wiki_loop_through_keywords(request):
     request = request.split(' ')
 
     for i, _ in enumerate(request):
-        print(request[i])
         wiki_answer = wiki_request(request[i])
         # Using the first result
         if wiki_answer:
@@ -167,7 +166,6 @@ def wiki_request(requested_area):
     :param requested_area: The requested area
     :return: Wiki answer about requested area
     """
-
     logging.info(f"wiki request {requested_area} (logic.py)")
     wiki_url = "https://fr.wikipedia.org/w/api.php"
     title_url = f'{wiki_url}?action=opensearch&search={requested_area}'
@@ -220,7 +218,3 @@ def getting_wiki_sentence(wiki_title):
         logging.error(f"getting wiki extract failed with title {wiki_title}")
         return None
 
-
-if __name__ == '__main__':
-    result = google_maps_request("Openclassrooms, Paris")
-    print(result)
