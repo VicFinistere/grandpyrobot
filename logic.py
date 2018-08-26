@@ -77,6 +77,7 @@ def google_maps_request(user_request):
     url = f"https://maps.googleapis.com/maps/api/place/textsearch/json?input={user_request}&key={config.KEY}"
 
     data = request_api(url)
+    print(data)
     if data is not None:
         try:
             maps_response = assign_maps_data(data)
@@ -132,6 +133,7 @@ def query_autocomplete_place(input_request):
         logging.exception("query autocomplete place failed (logic.py)")
         return None
 
+
 '''
 WIKI ENCYCLOPEDIA
 Python Functions
@@ -156,7 +158,6 @@ def wiki_loop_through_keywords(request):
             logging.info(f"wiki find this answer : {wiki_answer} (logic.py)")
             return wiki_answer
         i += 1
-    print('faiiiiiiiiled')
     return None
 
 
@@ -218,3 +219,8 @@ def getting_wiki_sentence(wiki_title):
     else:
         logging.error(f"getting wiki extract failed with title {wiki_title}")
         return None
+
+
+if __name__ == '__main__':
+    result = google_maps_request("Openclassrooms, Paris")
+    print(result)
