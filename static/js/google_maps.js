@@ -66,15 +66,17 @@ function create_map_objects(mapCenter, founded_place=true)
     console.debug("create_map_objects "+mapCenter+" : map and marker (google_maps.js)");
     if(founded_place === true)
     {
-        zoom = 15
+        zoom = 15;
+        var marker;
+        map = new google.maps.Map(document.getElementById('map'), {center: mapCenter, zoom: zoom});
+        marker = new google.maps.Marker({position: mapCenter, map: map});
     }
     else
     {
-        zoom = 6
+        zoom = 3;
+        map = new google.maps.Map(document.getElementById('map'), {center: mapCenter, zoom: zoom, mapTypeId: 'satellite'});
     }
-    map = new google.maps.Map(document.getElementById('map'), {center: mapCenter, zoom: zoom});
-    var marker;
-    marker = new google.maps.Marker({position: mapCenter, map: map});
+
     return map;
 }
 
@@ -111,9 +113,11 @@ function sending_address_text(name, address)
 {
 
     clear_text();
-    var first_word = name.split(" ");
-    first_word = first_word[0];
-    $('<p>', {class: 'maps robot_white_msg', text:first_word +" ..?! C'est ici ! Je te montre sur la carte !"}).appendTo('#text_area');
+    $('<p>', {class: 'maps robot_white_msg', text:name +" ..?! C'est ici ! Je te montre sur la carte !"}).appendTo('#text_area');
+    scroll();
+
+    setTimeout(function () {$('p.maps').hide();scroll();},3000);
+
     $('<p>', {text: name + " : " + address}).appendTo('#text_place_area');
 
     //Debug
@@ -124,10 +128,11 @@ function sending_maps_failed_text()
 {
     clear_text();
 
-    var maps_failed_text = "( Essayez un autre lieu... )";
+    var maps_failed_text = " Google maps : Adresse non définie ...";
     $('<p>', {text: maps_failed_text}).appendTo('#text_place_area');
 
     //Warn
     console.debug("sending_maps_failed_text (google_maps.js)");
+    initMap();
 }
 
