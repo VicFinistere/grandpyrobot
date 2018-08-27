@@ -178,21 +178,21 @@ function bot_answering(user_checked_text)
         case(user_checked_text.indexOf("connais-tu") !== -1):
             if (user_input.css('color') !== 'rgb(230, 230, 230)')
             {
-                $('<p>', {class: 'robot_white_msg', text: "Ah je me souviens pas vraiment ce que c'est mais..."}).appendTo('#text_area');
+                $('<p>', {class: 'robot_white_msg', text: "Ah non...je ne me souviens pas vraiment ce que c'est..."}).appendTo('#text_area');
                 user_input.css('color', 'rgb(230, 230, 230)');
             }
             break;
         case(user_checked_text.indexOf("connais tu") !== -1):
             if (user_input.css('color') !== 'rgb(230, 230, 230)')
             {
-                $('<p>', {class: 'robot_white_msg', text: "Ah je me souviens pas vraiment ce que c'est mais..."}).appendTo('#text_area');
+                $('<p>', {class: 'robot_white_msg', text: "Ah non...je ne me souviens pas vraiment ce que c'est..."}).appendTo('#text_area');
                 user_input.css('color', 'rgb(230, 230, 230)');
             }
             break;
         case(user_checked_text.indexOf("tu connais") !== -1):
             if (user_input.css('color') !== 'rgb(230, 230, 230)')
             {
-                $('<p>', {class: 'robot_white_msg', text: "Ah je me souviens pas vraiment ce que c'est mais..."}).appendTo('#text_area');
+                $('<p>', {class: 'robot_white_msg', text: "Ah non...je ne me souviens pas vraiment ce que c'est..."}).appendTo('#text_area');
                 user_input.css('color', 'rgb(230, 230, 230)');
             }
             break;
@@ -339,8 +339,7 @@ function bot_answering(user_checked_text)
             if (user_input.css('color') !== 'rgb(230, 230, 230)')
             {
                 $('<p>', {class: 'robot_white_msg', text: "Je suis grandpy !"}).appendTo('#text_area');
-                $('<p>', {class: 'robot_white_msg', text:
-                        "Je peux te trouver un lieu..."}).appendTo('#text_area');
+                $('<p>', {class: 'robot_white_msg', text: "Je peux te trouver un lieu..."}).appendTo('#text_area');
                 user_input.css('color', 'rgb(230, 230, 230)');
             }
             break;
@@ -355,7 +354,23 @@ function bot_answering(user_checked_text)
         default:
             if (user_input.css('color') !== 'rgb(230, 230, 230)')
             {
-                $('<p>', {class: 'robot_white_msg far fa-grin-beam-sweat'}).appendTo('#text_area');
+                scroll();
+                setTimeout(function ()
+                {
+                    $('<p>', {class: 'tmp robot_white_msg', text: "Là dessus je pourrais t'en dire beaucoup..."}).appendTo('#text_area');
+                    scroll();
+                },1000);
+                setTimeout(function ()
+                {
+                    $('<p>', {class: 'tmp robot_white_msg', text: "Une autre fois peut être..."}).appendTo('#text_area');
+                    scroll();
+                },4000);
+                setTimeout(function ()
+                {
+                    $('p.tmp').remove();
+                    $('<p>', {class: 'robot_white_msg', text: "..."}).appendTo('#text_area');
+                },6000);
+
                 user_input.css('color', 'rgb(230, 230, 230)');
             }
             break;
