@@ -27,11 +27,18 @@ function wiki_api(user_input)
                     scroll();
                     $('p:hidden').remove();
                     $('<p>', {class: 'robot_white_msg', text: wiki_answer}).appendTo('#text_area');
+
                     setTimeout(function ()
                     {
-                        $('p.maps').hide();
+                        $('<p>', {class: 'thanks far fa-grin faa-tada animated user_blue_msg'}).appendTo('#text_area');
                         scroll();
-                    },3000);
+                    },6000);
+
+                    setTimeout(function ()
+                    {
+                        $('p.thanks').remove();
+                        scroll();
+                    },8000);
                 },1800);
             }
             else
