@@ -21,7 +21,7 @@ function maps_api(input_text)
             {
                 //Warn
                 console.warn("google maps failed (google_maps.js)");
-                get_place_auto_complete(input_text);
+                sending_maps_failed_text();
             }
         });
 }
@@ -78,61 +78,7 @@ function create_map_objects(mapCenter, founded_place=true)
     return map;
 }
 
-function get_place_auto_complete(input_text)
-{
-    //Debug
-    console.debug("get_place_auto_complete "+input_text+" (google_maps.js)");
-    $.getJSON($SCRIPT_ROOT + '/query_place', {keywords: input_text},
-        function (data) {
-            place_auto_complete(data);
-        });
-}
 
-function place_auto_complete(data)
-{
-    //Debug
-    console.debug("place_auto_complete "+data+" (google_maps.js)");
-    if (data !== undefined)
-    {
-        //Debug
-        console.debug("place_auto_complete : Query place worked ! (google_maps.js) ");
-        remake_maps_call(data, 1);
-    }
-    else
-    {
-        //Warn
-        console.warn("place_auto_complete : Query place failed ! (google_maps.js) ");
-        sending_maps_failed_text();
-    }
-}
-
-function remake_maps_call(data)
-{
-    //Debug
-    console.debug("One recall for maps_api");
-
-    //Debug
-    console.debug("google_api (google_maps.js)");
-
-    $.getJSON($SCRIPT_ROOT + '/google_api', {input_text: data},
-        function (data)
-        {
-            //Debug
-            console.debug("Using google maps personnal API (google_maps.js)");
-
-            if (data !== 'failed' )
-            {
-                //Debug
-                console.debug("google maps succeed (google_maps.js)");
-                maps_success_answer(data);
-            }
-            else
-            {
-                sending_maps_failed_text();
-            }
-        });
-
-}
 
 function maps_success_answer(data)
 {

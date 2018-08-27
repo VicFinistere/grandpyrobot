@@ -25,8 +25,9 @@ def calling_google_api():
     """
     input_request = request.args.get('input_text', '')
     cleaned_request = logic.cleaning_request(input_request)
+    place = logic.query_autocomplete_place(cleaned_request)
     try:
-        maps_response = logic.google_maps_request(cleaned_request)
+        maps_response = logic.google_maps_request(place)
         if maps_response is not None and maps_response is not 'Failed':
             name, lat, lng, address = maps_response[0], maps_response[1], maps_response[2], maps_response[3]
             return jsonify(name, lat, lng, address)
@@ -60,24 +61,3 @@ def calling_wiki_api():
             logging.exception("Wiki failed (views.py)")
             return jsonify('failed')
 
-
-@app.route('/query_place')
-def query_place():
-    """
-    Query auto complete place
-    :return: Place prediction
-    """
-    input_request = request.args.get('keywords', default=None)
-    cleaned_request = logic.cleaning_request(input_request)
-    try:
-        place = logic.query_autocomplete_place(cleaned_request)
-        if place is not None:
-            logging.info("query place has worked (views.py)")
-            return jsonify(place)
-        else:
-            logging.exception("query place failed (views.py)")
-            return jsonify('failed')
-
-    except TypeError:
-        logging.exception("query place failed (views.py)")
-        return jsonify('failed')
