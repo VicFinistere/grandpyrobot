@@ -1,14 +1,12 @@
 """File containing all the unit tests for the application"""
 
 import unittest
-from unittest.mock import patch
-import json
 import logic
 from views import app
 
 
 class TestFlaskApp(unittest.TestCase):
-    """Unit test class for """
+    """Unit test class to test the App """
 
     def setUp(self):
         app.testing = True
