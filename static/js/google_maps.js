@@ -111,7 +111,9 @@ function sending_address_text(name, address)
 {
 
     clear_text();
-    $('<p>', {class: 'maps robot_white_msg', text:"Je connais ce lieu ! Je te montre sur la carte !"}).appendTo('#text_area');
+    var first_word = name.split(" ");
+    first_word = first_word[0];
+    $('<p>', {class: 'maps robot_white_msg', text:first_word +" ..?! C'est ici ! Je te montre sur la carte !"}).appendTo('#text_area');
     $('<p>', {text: name + " : " + address}).appendTo('#text_place_area');
 
     //Debug
