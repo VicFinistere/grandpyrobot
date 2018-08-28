@@ -3,7 +3,7 @@
 Application launcher
 """
 
-from views import app
+from gr_app.views import app
 
 if __name__ == "__main__":
     app.run()

@@ -4,8 +4,7 @@ WebApp Python Side - Logic
 import json
 import logging
 import requests
-import config
-
+from gr_app.config import ROOT, KEY
 '''
 GENERIC USAGE
 Python functions
@@ -47,7 +46,7 @@ def cleaning_request(user_request):
     array_of_words = user_request.split()
 
     # Using stopwords file
-    with open(config.ROOT+'/static/json/stopwords.json', 'r') as file:
+    with open(ROOT+'/static/json/stopwords.json', 'r') as file:
         stopwords = json.load(file)
 
         # Parsing each word in array
@@ -74,7 +73,7 @@ def google_maps_request(user_request):
     :return: maps_response : [name, lat, lng, address ]
     """
     logging.info(f"google maps request {user_request} (logic.py)")
-    url = f"https://maps.googleapis.com/maps/api/place/textsearch/json?input={user_request}&key={config.KEY}"
+    url = f"https://maps.googleapis.com/maps/api/place/textsearch/json?input={user_request}&key={KEY}"
 
     data = request_api(url)
     if data is not None:
@@ -122,7 +121,7 @@ def query_autocomplete_place(input_request):
     """
     logging.info(f"query autocomplete place : {input_request} (logic.py)")
     autocomplete_url = "https://maps.googleapis.com/maps/api/place/queryautocomplete/json"
-    url = f"{autocomplete_url}?key={config.KEY}&language=fr?&input={input_request}"
+    url = f"{autocomplete_url}?key={KEY}&language=fr?&input={input_request}"
     data = request_api(url)
 
     if data["status"] == 'OK':

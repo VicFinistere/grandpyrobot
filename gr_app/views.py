@@ -1,9 +1,14 @@
 """
 Handling views of the web application
 """
+# Flask
 from flask import Flask, render_template, request, jsonify
-import logic
+
+# Logs
 import logging
+
+# Grand-py Robot
+import gr_app.logic
 
 app = Flask(__name__)
 
@@ -24,11 +29,11 @@ def calling_google_api():
     :return: json result
     """
     input_request = request.args.get('input_text', '')
-    cleaned_request = logic.cleaning_request(input_request)
+    cleaned_request = gr_app.logic.cleaning_request(input_request)
     if cleaned_request:
-        place = logic.query_autocomplete_place(cleaned_request)
+        place = gr_app.logic.query_autocomplete_place(cleaned_request)
         try:
-            maps_response = logic.google_maps_request(place)
+            maps_response = gr_app.logic.google_maps_request(place)
             if maps_response is not None and maps_response is not 'Failed':
                 name, lat, lng, address = maps_response[0], maps_response[1], maps_response[2], maps_response[3]
                 return jsonify(name, lat, lng, address)
@@ -51,14 +56,14 @@ def calling_wiki_api():
     :return: json result
     """
     user_input = request.args.get('user_input', '')
-    cleaned_request = logic.cleaning_request(user_input)
+    cleaned_request = gr_app.logic.cleaning_request(user_input)
     if cleaned_request:
-        data = logic.wiki_request(cleaned_request)
+        data = gr_app.logic.wiki_request(cleaned_request)
         if data:
             logging.info("Wiki wordked with cleaned request (views.py)")
             return jsonify(data)
         else:
-            data = logic.wiki_loop_through_keywords(cleaned_request)
+            data = gr_app.logic.wiki_loop_through_keywords(cleaned_request)
             if data:
                 logging.info("Wiki wordked with cleagitned request (views.py)")
                 return jsonify(data)
