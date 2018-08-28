@@ -1,8 +1,10 @@
 """File containing all the unit tests for the application"""
 
 import unittest
-import logic
-from views import app
+from unittest.mock import patch
+
+import gr_app.logic
+from gr_app.views import app
 
 
 class TestFlaskApp(unittest.TestCase):
@@ -27,13 +29,14 @@ class TestLogic(unittest.TestCase):
     """
     Request any api an return JSON Data for response
     """
+
     def test_request_api(self):
         """
         Request api
         :return: JSON Data
         """
         url = "https://fr.wikipedia.org/w/api.php?action=opensearch&search='openclassrooms'"
-        test_result = logic.request_api(url)
+        test_result = gr_app.logic.request_api(url)
         self.assertEqual(test_result, ["'openclassrooms'", ['OpenClassrooms'], ["OpenClassrooms est une école en ligne "
                                                                                 "qui propose à ses membres des cours "
                                                                                 "certifiants et des parcours "
@@ -42,17 +45,19 @@ class TestLogic(unittest.TestCase):
                                                                                 " des universités, ou encore par des "
                                                                                 "entreprises partenaires comme "
                                                                                 "Microsoft ou IBM."],
-                                                                                ['https://fr.wikipedia.org/wiki/'
-                                                                                 'OpenClassrooms']])
+                                       ['https://fr.wikipedia.org/wiki/'
+                                        'OpenClassrooms']])
+
     """
     Cleaning Request : Use to remove stopwords in a request string
     """
+
     def test_cleaning_request(self):
         """
         Parse a string
         :return: cleaned request
         """
-        test_result = logic.cleaning_request("Est-ce que tu connais l'adresse d'Openclassroom's ?")
+        test_result = gr_app.logic.cleaning_request("Est-ce que tu connais l'adresse d'Openclassroom's ?")
         self.assertEqual(test_result, 'Openclassroom')
 
     '''
@@ -65,7 +70,7 @@ class TestLogic(unittest.TestCase):
         Google maps request
         :return: maps_response : [name, lat, lng, address ]
         """
-        test_result = logic.google_maps_request("Openclassrooms, Paris")
+        test_result = gr_app.logic.google_maps_request("Openclassrooms, Paris")
         self.assertEqual(test_result, ['Openclassrooms', 48.8747578, 2.350564700000001,
                                        '7 Cité Paradis, 75010 Paris, France'])
 
@@ -79,7 +84,7 @@ class TestLogic(unittest.TestCase):
                                                           'location': {'lat': 48.8747578, 'lng': 2.350564700000001}},
                                                       'name': 'Openclassrooms'}],
                 'status': 'OK'}
-        test_result = logic.assign_maps_data(data)
+        test_result = gr_app.logic.assign_maps_data(data)
         self.assertEqual(test_result, ['Openclassrooms', 48.8747578, 2.350564700000001,
                                        '7 Cité Paradis, 75010 Paris, France'])
 
@@ -88,7 +93,7 @@ class TestLogic(unittest.TestCase):
         Query for a place by auto completion
         :return: The first place returned by the query place api
         """
-        test_result = logic.query_autocomplete_place('Openclas')
+        test_result = gr_app.logic.query_autocomplete_place('Openclas')
         self.assertEqual(test_result, 'Openclassrooms, Cité Paradis, Paris, France')
 
     '''
@@ -102,7 +107,7 @@ class TestLogic(unittest.TestCase):
         Wiki testing each word in request
         :return: wiki answer
         """
-        test_result = logic.wiki_loop_through_keywords('qdqsd sqsd Openclassrooms')
+        test_result = gr_app.logic.wiki_loop_through_keywords('qdqsd sqsd Openclassrooms')
         self.assertEqual(test_result,
                          'OpenClassrooms est une école en ligne qui propose à ses membres des cours certifiants '
                          'et des parcours débouchant sur un métier d\'avenir, réalisés en interne, par des écoles, '
@@ -115,7 +120,7 @@ class TestLogic(unittest.TestCase):
         Getting wiki answer
         :return: Wiki answer about requested area
         """
-        test_result = logic.wiki_request("Openclassrooms")
+        test_result = gr_app.logic.wiki_request("Openclassrooms")
         self.assertEqual(test_result,
                          'OpenClassrooms est une école en ligne qui propose à ses membres des cours certifiants et des '
                          'parcours débouchant sur un métier d\'avenir, réalisés en interne, par des écoles, des '
@@ -128,13 +133,47 @@ class TestLogic(unittest.TestCase):
         Get an extract of a wiki page
         :return: wiki sentence
         """
-        test_result = logic.wiki_request("Openclassrooms")
+        test_result = gr_app.logic.wiki_request("Openclassrooms")
         self.assertEqual(test_result,
                          'OpenClassrooms est une école en ligne qui propose à ses membres des cours certifiants et des '
                          'parcours débouchant sur un métier d\'avenir, réalisés en interne, par des écoles, des '
                          'universités, ou encore par des entreprises partenaires comme Microsoft ou IBM. '
                          'Jusqu\'en 2018, n\'importe quel membre du site pouvait être auteur, '
                          'via un outil nommé "Course Lab".')
+
+    @patch('gr_app.logic.request_api')
+    def test_get_data_from_google_maps(self, mock_request_api):
+        """
+        Test the Google map api request function"
+        :return: name, lat, lng, address
+        """
+        mock_result = {'html_attributions': [], 'results': [{
+            'formatted_address': '7 Cité Paradis, 75010 Paris, France',
+            'geometry': {'location': {'lat': 48.8747578, 'lng': 2.350564700000001}}, 'name': 'Openclassrooms'}]
+            , 'status': 'OK'}
+        mock_request_api.return_value = mock_result
+        [name, lat, lng, address] = gr_app.logic.google_maps_request('test')
+        self.assertEqual(name, "Openclassrooms")
+        self.assertEqual(lat, 48.8747578)
+        self.assertEqual(lng, 2.350564700000001)
+        self.assertEqual(address, '7 Cité Paradis, 75010 Paris, France')
+
+    @patch('gr_app.logic.getting_wiki_extract')
+    @patch('gr_app.logic.request_api')
+    def test_get_data_from_wiki(self, mock_request_api, mock_get_title_from_wiki):
+        """
+        Wiki get content
+        :return: Extract
+        """
+        mock_request_result = {"batchcomplete": "", "warnings": {
+            "extracts": {"*": "\"exlimit\" was too large for a whole article extracts request, lowered to 1."}},
+                               "query": {"normalized": [{"from": "paris", "to": "Paris"}], "pages": {
+                                   "681159": {"pageid": 681159, "ns": 0, "title": "Paris",
+                                              "extract": "Paris (prononc\u00e9 [pa.\u0281i] ) est la capitale de la France."}}}}
+        mock_get_title_from_wiki.return_value = 'Paris (prononcé [pa.ʁi] ) est la capitale de la France.'
+        mock_request_api.return_value = mock_request_result
+        test_result = gr_app.logic.getting_wiki_extract("test")
+        self.assertEqual(test_result, 'Paris (prononcé [pa.ʁi] ) est la capitale de la France.')
 
 
 if __name__ == "__main__":
