@@ -25,4 +25,3 @@ It's made with a simple & beautifull Boostrap template : "Cover" ! <br>
 [https://grandpyrobot.herokuapp.com](https://grandpyrobot.herokuapp.com)
 [https://github.com/zoeinfp/grandpyrobot](https://github.com/Zoeinfp/grandpyrobot)<br>
 <small>Zoé Belleton– [@zoe_infp](https://twitter.com/zoebelleton)</small> – zoebelleton@gmail.com
-![GRANDPY ROBOT](https://zupimages.net/up/18/35/f0u3.png "Web Page")
