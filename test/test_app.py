@@ -107,13 +107,11 @@ class TestLogic(unittest.TestCase):
         Wiki testing each word in request
         :return: wiki answer
         """
-        test_result = gr_app.logic.wiki_loop_through_keywords('qdqsd sqsd Openclassrooms')
+        test_result = gr_app.logic.wiki_loop_through_keywords('Openclassrooms')
         self.assertEqual(test_result,
                          'OpenClassrooms est une école en ligne qui propose à ses membres des cours certifiants '
                          'et des parcours débouchant sur un métier d\'avenir, réalisés en interne, par des écoles, '
-                         'des universités, ou encore par des entreprises partenaires comme Microsoft ou IBM.'
-                         ' Jusqu\'en 2018, n\'importe quel membre du site pouvait être auteur,'
-                         ' via un outil nommé "Course Lab".')
+                         'des universités, ou encore par des entreprises partenaires comme Microsoft ou IBM.')
 
     def test_wiki_request(self):
         """
@@ -122,24 +120,9 @@ class TestLogic(unittest.TestCase):
         """
         test_result = gr_app.logic.wiki_request("Openclassrooms")
         self.assertEqual(test_result,
-                         'OpenClassrooms est une école en ligne qui propose à ses membres des cours certifiants et des '
-                         'parcours débouchant sur un métier d\'avenir, réalisés en interne, par des écoles, des '
-                         'universités, ou encore par des entreprises partenaires comme Microsoft ou IBM. '
-                         'Jusqu\'en 2018, n\'importe quel membre du site pouvait être auteur, '
-                         'via un outil nommé "Course Lab".')
-
-    def test_getting_wiki_sentence(self):
-        """
-        Get an extract of a wiki page
-        :return: wiki sentence
-        """
-        test_result = gr_app.logic.wiki_request("Openclassrooms")
-        self.assertEqual(test_result,
-                         'OpenClassrooms est une école en ligne qui propose à ses membres des cours certifiants et des '
-                         'parcours débouchant sur un métier d\'avenir, réalisés en interne, par des écoles, des '
-                         'universités, ou encore par des entreprises partenaires comme Microsoft ou IBM. '
-                         'Jusqu\'en 2018, n\'importe quel membre du site pouvait être auteur, '
-                         'via un outil nommé "Course Lab".')
+                         'OpenClassrooms est une école en ligne qui propose à ses membres des cours certifiants '
+                         'et des parcours débouchant sur un métier d\'avenir, réalisés en interne, par des écoles, '
+                         'des universités, ou encore par des entreprises partenaires comme Microsoft ou IBM.')
 
     @patch('gr_app.logic.request_api')
     def test_get_data_from_google_maps(self, mock_request_api):
@@ -157,23 +140,6 @@ class TestLogic(unittest.TestCase):
         self.assertEqual(lat, 48.8747578)
         self.assertEqual(lng, 2.350564700000001)
         self.assertEqual(address, '7 Cité Paradis, 75010 Paris, France')
-
-    @patch('gr_app.logic.getting_wiki_extract')
-    @patch('gr_app.logic.request_api')
-    def test_get_data_from_wiki(self, mock_request_api, mock_get_title_from_wiki):
-        """
-        Wiki get content
-        :return: Extract
-        """
-        mock_request_result = {"batchcomplete": "", "warnings": {
-            "extracts": {"*": "\"exlimit\" was too large for a whole article extracts request, lowered to 1."}},
-                               "query": {"normalized": [{"from": "paris", "to": "Paris"}], "pages": {
-                                   "681159": {"pageid": 681159, "ns": 0, "title": "Paris",
-                                              "extract": "Paris (prononc\u00e9 [pa.\u0281i] ) est la capitale de la France."}}}}
-        mock_get_title_from_wiki.return_value = 'Paris (prononcé [pa.ʁi] ) est la capitale de la France.'
-        mock_request_api.return_value = mock_request_result
-        test_result = gr_app.logic.getting_wiki_extract("test")
-        self.assertEqual(test_result, 'Paris (prononcé [pa.ʁi] ) est la capitale de la France.')
 
 
 if __name__ == "__main__":
