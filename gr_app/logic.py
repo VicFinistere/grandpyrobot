@@ -77,7 +77,6 @@ def google_maps_request(user_request):
     url = f"https://maps.googleapis.com/maps/api/place/textsearch/json?input={user_request}&key={KEY}"
 
     data = request_api(url)
-    print(data)
     if data['status'] == 'OK':
         try:
             maps_response = assign_maps_data(data, user_request)
@@ -153,6 +152,39 @@ Python Functions
 '''
 
 
+def wiki_cleaned_request(user_request):
+    """
+    Cleaning request for wiki encyclopedia
+    :param user_request: Request with recurrent words
+    :return: clever request
+    """
+    user_request = user_request.split(' ')
+
+    keywords_list = []
+
+    # Using stopwords file
+    with open(ROOT + '/static/json/wiki_stopwords.json', 'r') as file:
+        stopwords = json.load(file)
+
+        # Parsing each word in array
+        for word in user_request:
+
+            # If the current word is not a stop_word
+            if word.lower() not in stopwords:
+                # Append in the list
+                keywords_list.append(word)
+
+    if keywords_list:
+        logging.info("There is clever words ! (logic.py)")
+        clever_request = " ".join(keywords_list)
+
+    else:
+        logging.info("There's no clever words... (logic.py)")
+        clever_request = None
+
+    return clever_request
+
+
 def wiki_loop_through_keywords(request):
     """
     Wiki testing each word in request
@@ -180,52 +212,32 @@ def wiki_request(requested_area):
     """
     logging.info(f"wiki request {requested_area} (logic.py)")
     wiki_url = "https://fr.wikipedia.org/w/api.php"
-    title_url = f'{wiki_url}?action=opensearch&search={requested_area}'
+    clever_request = wiki_cleaned_request(requested_area)
+
+    if clever_request is not None:
+        search_term = cleaning_request(clever_request)
+    else:
+        search_term = cleaning_request(requested_area)
+
+    title_url = f"{wiki_url}?action=opensearch&search={search_term}"
     wiki_title_answer = request_api(title_url)
 
-    if wiki_title_answer and wiki_title_answer[1]:
-        logging.info("wiki_title_answer worked !")
-        wiki_title = wiki_title_answer[1][0]
-        wiki_extract = getting_wiki_extract(wiki_title)
-        return wiki_extract
-
-    else:
-        logging.info("wiki request failed on start...")
+    if wiki_title_answer is not None:
+        wiki_responses = wiki_title_answer[2]
+        for response in wiki_responses:
+            if len(response) > 1:
+                return response
+        logging.info("wiki request failed with clever request(logic.py)")
         return None
 
-
-def getting_wiki_extract(wiki_title):
-    """
-    Getting wiki extract
-    :param wiki_title:
-    :return: wiki extract
-    """
-    if wiki_title is not None:
-        logging.info("wiki_title worked !")
-        wiki_extract = getting_wiki_sentence(wiki_title)
-        return wiki_extract
     else:
-        logging.info("wiki request failed at the end...")
-        return None
+        title_url = f"{wiki_url}?action=opensearch&search={requested_area}"
+        wiki_title_answer = request_api(title_url)
 
-
-def getting_wiki_sentence(wiki_title):
-    """
-    Get an extract of a wiki page
-    :param wiki_title: Wiki title
-    :return: wiki extract
-    """
-    wiki_url = "https://fr.wikipedia.org/w/api.php"
-    logging.info(f"get_wiki_extract : url = {wiki_url} / tirle = {wiki_title} (logic.py)")
-    prop_sentence = "extracts&exsentences"
-    first_sentence_url = f"{wiki_url}?action=query&titles={wiki_title}&prop={prop_sentence}=1&format=json&explaintext"
-    first_sentence = request_api(first_sentence_url)
-    wiki_extract = ""
-
-    if first_sentence is not None:
-        for page_id in first_sentence['query']['pages']:
-            wiki_extract = first_sentence['query']['pages'][page_id]['extract']
-        return wiki_extract
-    else:
-        logging.error(f"getting wiki extract failed with title {wiki_title}")
-        return None
+        if wiki_title_answer is not None:
+            wiki_responses = wiki_title_answer[2]
+            for response in wiki_responses:
+                if len(response) > 1:
+                    return response
+            logging.info("wiki request failed with requested area(logic.py)")
+            return None
