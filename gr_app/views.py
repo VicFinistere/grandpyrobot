@@ -32,14 +32,22 @@ def calling_google_api():
     cleaned_request = gr_app.logic.cleaning_request(input_request)
     if cleaned_request:
         place = gr_app.logic.query_autocomplete_place(cleaned_request)
+
         try:
             maps_response = gr_app.logic.google_maps_request(place)
             if maps_response is not None and maps_response is not 'Failed':
                 name, lat, lng, address = maps_response[0], maps_response[1], maps_response[2], maps_response[3]
                 return jsonify(name, lat, lng, address)
             else:
-                logging.exception("Google maps failed (views.py)")
-                return jsonify('failed')
+                logging.exception("Google maps failed to query place(views.py)")
+
+                maps_response = gr_app.logic.google_maps_request(input_request)
+                if maps_response is not None and maps_response is not 'Failed':
+                    name, lat, lng, address = maps_response[0], maps_response[1], maps_response[2], maps_response[3]
+                    return jsonify(name, lat, lng, address)
+                else:
+                    logging.exception("Google maps failed (views.py)")
+                    return jsonify('failed')
 
         except IndexError:
             logging.exception("Google maps failed (views.py)")

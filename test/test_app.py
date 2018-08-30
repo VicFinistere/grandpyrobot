@@ -84,7 +84,7 @@ class TestLogic(unittest.TestCase):
                                                           'location': {'lat': 48.8747578, 'lng': 2.350564700000001}},
                                                       'name': 'Openclassrooms'}],
                 'status': 'OK'}
-        test_result = gr_app.logic.assign_maps_data(data)
+        test_result = gr_app.logic.assign_maps_data(data, "Openclassrooms")
         self.assertEqual(test_result, ['Openclassrooms', 48.8747578, 2.350564700000001,
                                        '7 Cité Paradis, 75010 Paris, France'])
 

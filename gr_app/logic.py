@@ -5,6 +5,7 @@ import json
 import logging
 import requests
 from gr_app.config import ROOT, KEY
+
 '''
 GENERIC USAGE
 Python functions
@@ -46,7 +47,7 @@ def cleaning_request(user_request):
     array_of_words = user_request.split()
 
     # Using stopwords file
-    with open(ROOT+'/static/json/stopwords.json', 'r') as file:
+    with open(ROOT + '/static/json/stopwords.json', 'r') as file:
         stopwords = json.load(file)
 
         # Parsing each word in array
@@ -76,9 +77,10 @@ def google_maps_request(user_request):
     url = f"https://maps.googleapis.com/maps/api/place/textsearch/json?input={user_request}&key={KEY}"
 
     data = request_api(url)
-    if data is not None:
+    print(data)
+    if data['status'] == 'OK':
         try:
-            maps_response = assign_maps_data(data)
+            maps_response = assign_maps_data(data, user_request)
             if maps_response is not None:
                 return maps_response
             else:
@@ -93,22 +95,33 @@ def google_maps_request(user_request):
         return None
 
 
-def assign_maps_data(data):
+def assign_maps_data(data, user_request):
     """
     Assign data
     :param data: Maps data in json
+    :param user_request: Use it in case there's no address
     :return: name, lat, lng, address
     """
 
-    try:
-        lat = data["results"][0]["geometry"]["location"]["lat"]
-        lng = data["results"][0]["geometry"]["location"]["lng"]
-        address = data["results"][0]["formatted_address"]
-        name = data["results"][0]["name"]
-        result = [name, lat, lng, address]
-        return result
-
-    except IndexError:
+    if data['status'] == 'OK':
+        logging.info('Place found (logic.py)')
+        logging.info(data)
+        try:
+            lat = data["results"][0]["geometry"]["location"]["lat"]
+            lng = data["results"][0]["geometry"]["location"]["lng"]
+            address = data["results"][0]["formatted_address"]
+            name = data["results"][0]["name"]
+            result = [name, lat, lng, address]
+            return result
+        except IndexError:
+            logging.error("Formatted address not found (logic.py)")
+            try:
+                result = [name, lat, lng, user_request]
+                return result
+            except IndexError:
+                logging.error("Index error assign maps data (logic.py)")
+                return None
+    else:
         logging.error("Index error assign maps data (logic.py)")
         return None
 
@@ -216,4 +229,3 @@ def getting_wiki_sentence(wiki_title):
     else:
         logging.error(f"getting wiki extract failed with title {wiki_title}")
         return None
-
